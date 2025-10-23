@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
 import { withAuth } from '@/lib/with-auth';
+ import axios from 'axios';
 
 const appconfig={
    domainapi :'https://f7.donggiatri.com/users/demo/pluto/'
@@ -30,12 +31,9 @@ export async function GET(request: NextRequest) {
   }
 
   url = appconfig.domainapi+pathname;
-  let data = await fetch(url, { 
-    headers: headers,
-  }).then((r)=>r.json()).catch((e)=>{
+  let data = await axios.get(url);
 
-  });
-   let transformed = typeof data=="object"? JSON.stringify(data):data;
+  let transformed = typeof data.data=="object"? JSON.stringify(data.data):data.data;
  
   return new Response(transformed, {
     headers: { 'Content-Type': 'application/json' },
@@ -69,13 +67,14 @@ export async function POST(request: NextRequest) {
   const pathname = request.headers.get('x-next-pathname');
 
   
-  url = appconfig.domainapi+pathname;
-  let data = await fetch(url, { 
-    headers: headers,
-  }).then((r)=>r.json()).catch((e)=>{
+  url = appconfig.domainapi+pathname; 
+  let data = await axios.post(url,{});
 
+  let transformed = typeof data.data=="object"? JSON.stringify(data.data):data.data;
+ 
+  return new Response(transformed, {
+    headers: { 'Content-Type': 'application/json' },
   });
-   let transformed = typeof data=="object"? JSON.stringify(data):data;
  
   return new Response(transformed, {
     headers: { 'Content-Type': 'application/json' },
