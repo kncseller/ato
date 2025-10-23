@@ -37,10 +37,10 @@ export async function GET(request: NextRequest) {
   });
   let transformed = { source: 'proxied-through-nextjs',url };
 
-  if(!data){
-    transformed = {...data, source: 'proxied-through-nextjs',url };
+  if(data){
+    transformed = data;
   }
-
+ 
   
   return new Response(JSON.stringify(transformed), {
     headers: { 'Content-Type': 'application/json' },
@@ -88,8 +88,8 @@ export async function POST(request: Request) {
 
   let transformed = { source: 'proxied-through-nextjs',url };
 
-  if(!data){
-    transformed = {...data, source: 'proxied-through-nextjs',url };
+  if(data){
+    transformed = data;
   }
  
   return new Response(JSON.stringify(transformed), {
