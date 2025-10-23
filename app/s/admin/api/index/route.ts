@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   url = appconfig.domainapi+pathname;
   let data = await fetch(url, { 
     headers: headers,
-  }).then((r)=>r.text()).catch((e)=>{
+  }).then((r)=>r.json()).catch((e)=>{
 
   });
    let transformed = typeof data=="object"? JSON.stringify(data):data;
@@ -68,20 +68,14 @@ export async function POST(request: Request) {
   const auth = request.headers.get('auth-token');
   const pathname = request.headers.get('x-next-pathname');
 
-  url = appconfig.domainapi+pathname;
-   const headers ={};
-  if(auth){
-    headers["auth-token"]  =auth;
-  }
-
+  
   url = appconfig.domainapi+pathname;
   let data = await fetch(url, { 
     headers: headers,
-  }).then((r)=>r.text()).catch((e)=>{
+  }).then((r)=>r.json()).catch((e)=>{
 
   });
-
-  let transformed = typeof data=="object"? JSON.stringify(data):data;
+   let transformed = typeof data=="object"? JSON.stringify(data):data;
  
   return new Response(transformed, {
     headers: { 'Content-Type': 'application/json' },
