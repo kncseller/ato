@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { withAuth } from '@/lib/with-auth';
 
 const appconfig={
-   domainapi :'https://f7.donggiatri.com/users/demo/pluto/'
+   domainapi :'https://f7.donggiatri.com/users/demo/pluto/admin/'
 };
 
 // async function secretGET(request: NextRequest) {
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
 //   });
 // }
  
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
  let url  = request.nextUrl.pathname;
 
   // const headersList = await headers();

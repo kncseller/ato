@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
 //   });
 // }
  
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
  let url  = request.nextUrl.pathname;
 
   // const headersList = await headers();
