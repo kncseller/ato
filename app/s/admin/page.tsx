@@ -4,12 +4,12 @@ import Script from 'next/script';
 export default function Home() {
   return (
     <>
-    <Script src="/build/jscore.js" strategy="beforeInteractive" /> 
+    <Script src="/s/admin/jscore.js" strategy="beforeInteractive" /> 
 
-    <link rel="stylesheet" href="/build/csscore.css" />
-    <link rel="stylesheet" href="/build/app.min.css" />
-    <link rel="stylesheet" href="/build/app.css" />
-    <link rel="stylesheet" href="/build/font.css" /> 
+    <link rel="stylesheet" href="/s/admin/csscore.css" />
+    <link rel="stylesheet" href="/s/admin/app.min.css" />
+    <link rel="stylesheet" href="/s/admin/app.css" />
+    <link rel="stylesheet" href="/s/admin/font.css" /> 
     <div className="screen_box">
 
   <div className="box-row-col">
