@@ -1,6 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { rootDomain } from '@/lib/utils';
 
+const appconfig={
+   domainapi :'https://f7.donggiatri.com/users/demo/f7vay/'
+};
+
 function extractSubdomain(request: NextRequest): string | null {
   const url = request.url;
   const host = request.headers.get('host') || '';
@@ -54,9 +58,19 @@ export async function middleware(request: NextRequest) {
     if (pathname === '/') {
       return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
     }
+    //detail api
+     if (pathname.startsWith('/api/')) { 
+        return NextResponse.json(new URL(`/s/${subdomain}/api/index/`, request.url));
+      }
   }
 
   if (pathname != '/') {
+
+      //detail api
+      if (pathname.startsWith('/api/')) { 
+        return NextResponse.json(new URL('/api/index/', request.url));
+      }
+
       return NextResponse.rewrite(new URL('/', request.url));
   }
 
