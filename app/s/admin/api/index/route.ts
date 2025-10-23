@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { withAuth } from '@/lib/with-auth';
 
 const appconfig={
-   domainapi :'https://f7.donggiatri.com/users/demo/f7vay/'
+   domainapi :'https://f7.donggiatri.com/users/demo/f7vay/admin/'
 };
 
 // async function secretGET(request: NextRequest) {
@@ -24,10 +24,14 @@ export async function GET(request: NextRequest) {
   const auth = request.headers.get('auth-token');
   const pathname = request.headers.get('x-next-pathname');
 
+  const headers ={};
+  if(auth){
+    headers["auth-token"]  =auth;
+  }
+
   url = appconfig.domainapi+pathname;
-  let data = await fetch(url, {
-    // Optional: forward some headers, add auth tokens, etc.
-    headers: { "auth-token": auth },
+  let data = await fetch(url, { 
+    headers: headers,
   }).then((r)=>r.text()).catch((e)=>{
 
   });
@@ -66,9 +70,14 @@ export async function POST(request: Request) {
   const pathname = request.headers.get('x-next-pathname');
 
   url = appconfig.domainapi+pathname;
-  let data = await fetch(url, {
-    // Optional: forward some headers, add auth tokens, etc.
-    headers: { "auth-token": auth },
+   const headers ={};
+  if(auth){
+    headers["auth-token"]  =auth;
+  }
+
+  url = appconfig.domainapi+pathname;
+  let data = await fetch(url, { 
+    headers: headers,
   }).then((r)=>r.text()).catch((e)=>{
 
   });
