@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { withAuth } from '@/lib/with-auth';
 
 const appconfig={
-   domainapi :'https://f7.donggiatri.com/users/demo/pluto/admin/'
+   domainapi :'https://f7.donggiatri.com/users/demo/pluto/'
 };
 
 // async function secretGET(request: NextRequest) {
@@ -35,13 +35,13 @@ export async function GET(request: NextRequest) {
   }).then((r)=>r.text()).catch((e)=>{
 
   });
+  let transformed = { source: 'proxied-through-nextjs',url };
 
   if(!data){
-    data = {};
+    transformed = {...data, source: 'proxied-through-nextjs',url };
   }
 
-  const transformed = { ...data, source: 'proxied-through-nextjs',url };
- 
+  
   return new Response(JSON.stringify(transformed), {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -86,7 +86,11 @@ export async function POST(request: Request) {
 
   });
 
-  const transformed = { ...data, source: 'proxied-through-nextjs',url };
+  let transformed = { source: 'proxied-through-nextjs',url };
+
+  if(!data){
+    transformed = {...data, source: 'proxied-through-nextjs',url };
+  }
  
   return new Response(JSON.stringify(transformed), {
     headers: { 'Content-Type': 'application/json' },
