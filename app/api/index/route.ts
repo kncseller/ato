@@ -36,6 +36,10 @@ export async function GET(request: NextRequest) {
 
   });
 
+  if(!data){
+    data = {};
+  }
+
   const transformed = { ...data, source: 'proxied-through-nextjs',url };
  
   return new Response(JSON.stringify(transformed), {

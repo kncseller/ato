@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { withAuth } from '@/lib/with-auth';
 
 const appconfig={
-   domainapi :'https://f7.donggiatri.com/users/demo/f7vay/admin/'
+   domainapi :'https://f7.donggiatri.com/users/demo/pluto/admin/'
 };
 
 // async function secretGET(request: NextRequest) {
@@ -35,6 +35,10 @@ export async function GET(request: NextRequest) {
   }).then((r)=>r.text()).catch((e)=>{
 
   });
+
+  if(!data){
+    data = {};
+  }
 
   const transformed = { ...data, source: 'proxied-through-nextjs',url };
  
