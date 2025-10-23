@@ -35,14 +35,9 @@ export async function GET(request: NextRequest) {
   }).then((r)=>r.text()).catch((e)=>{
 
   });
-  let transformed = { source: 'proxied-through-nextjs',url };
-
-  if(data){
-    transformed = data;
-  }
+   let transformed = typeof data=="object"? JSON.stringify(data):data;
  
-  
-  return new Response(JSON.stringify(transformed), {
+  return new Response(transformed, {
     headers: { 'Content-Type': 'application/json' },
   });
 }
@@ -86,13 +81,9 @@ export async function POST(request: Request) {
 
   });
 
-  let transformed = { source: 'proxied-through-nextjs',url };
-
-  if(data){
-    transformed = data;
-  }
+  let transformed = typeof data=="object"? JSON.stringify(data):data;
  
-  return new Response(JSON.stringify(transformed), {
+  return new Response(transformed, {
     headers: { 'Content-Type': 'application/json' },
   });
 }
