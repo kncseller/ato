@@ -6,7 +6,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 // };
 
 const domains = {
-  "ato":"/"
+  "ato":"/", 
+  "mb":"/", 
+  "woo":"/",
+  "aship":"/", 
 };
 
 function extractSubdomain(request: NextRequest): string | null {
@@ -15,23 +18,24 @@ function extractSubdomain(request: NextRequest): string | null {
   const hostname = host.split(':')[0];
 
 
+  
+  // Local development environment
+  if (url.includes('localhost') || url.includes('127.0.0.1')) {
+    // Try to extract subdomain from the full URL
+    const fullUrlMatch = url.match(/http:\/\/([^.]+)\.localhost/);
+    if (fullUrlMatch && fullUrlMatch[1]) {
+      return fullUrlMatch[1];
+    }
+
+    // Fallback to host header approach
+    if (hostname.includes('.localhost')) {
+      return hostname.split('.')[0];
+    }
+
+    return null;
+  }
+
   return hostname.includes('.')?hostname.split('.').slice(0, -2).join('.'):null;
-
-  // // Local development environment
-  // if (url.includes('localhost') || url.includes('127.0.0.1')) {
-  //   // Try to extract subdomain from the full URL
-  //   const fullUrlMatch = url.match(/http:\/\/([^.]+)\.localhost/);
-  //   if (fullUrlMatch && fullUrlMatch[1]) {
-  //     return fullUrlMatch[1];
-  //   }
-
-  //   // Fallback to host header approach
-  //   if (hostname.includes('.localhost')) {
-  //     return hostname.split('.')[0];
-  //   }
-
-  //   return null;
-  // }
 
   // // Production environment
   // const rootDomainFormatted = rootDomain.split(':')[0];
@@ -58,7 +62,15 @@ export async function middleware(request: NextRequest) {
   let subdomain = extractSubdomain(request);
 
   if (subdomain) {
-    subdomain = domains[subdomain]||subdomain;
+
+
+    if(subdomain.includes("admin")){
+       subdomain = "admin";
+    }else{
+       subdomain = domains[subdomain]||subdomain;
+    }
+
+   
 
     // Block access to admin page from subdomains
     if (pathname.startsWith('/admin')) {
