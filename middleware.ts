@@ -72,19 +72,23 @@ export async function middleware(request: NextRequest) {
 
    
 
-    // Block access to admin page from subdomains
-    if (pathname.startsWith('/admin')) {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+     if(subdomain!="/"){
 
-    // For the root path on a subdomain, rewrite to the subdomain page
-    if (pathname === '/') {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
-    }
-    //detail api
-     if (pathname.startsWith('/api/')) { 
-        return NextResponse.json(new URL(`/s/${subdomain}/api/index/`, request.url));
+      // Block access to admin page from subdomains
+      if (pathname.startsWith('/admin')) {
+        return NextResponse.redirect(new URL('/', request.url));
       }
+
+      // For the root path on a subdomain, rewrite to the subdomain page
+      if (pathname === '/') {
+        return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+      }
+      //detail api
+       if (pathname.startsWith('/api/')) { 
+          return NextResponse.json(new URL(`/s/${subdomain}/api/index/`, request.url));
+        }
+    }
+   
   }
 
   if (pathname != '/') {
